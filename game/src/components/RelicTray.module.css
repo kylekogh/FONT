@@ -1,0 +1,59 @@
+.tray {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  padding: var(--space-2) var(--space-4);
+}
+
+.relic {
+  position: relative;
+  background: var(--bg-raised);
+  border: 1px solid var(--gold-dim);
+  border-radius: var(--radius-sm);
+  padding: var(--space-1) var(--space-2);
+  cursor: default;
+}
+
+.relicName {
+  font-family: var(--font-body);
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 0.04em;
+}
+
+.tooltip {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 100;
+  background: var(--bg-midnight);
+  border: 1px solid var(--gold-dim);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  width: 200px;
+  box-shadow: var(--shadow-elevated);
+  pointer-events: none;
+}
+
+.tooltipName {
+  font-family: var(--font-display);
+  font-size: 11px;
+  color: var(--gold);
+  margin-bottom: var(--space-1);
+}
+
+.tooltipDesc {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--parchment);
+  margin-bottom: var(--space-2);
+  line-height: 1.4;
+}
+
+.tooltipFlavor {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 10px;
+  color: var(--parchment-3);
+  line-height: 1.3;
+}

@@ -7,8 +7,10 @@ export function applyDamage(
 ): CombatantState {
   const isWeak = (attacker.statuses.weak ?? 0) > 0;
   const isVulnerable = (target.statuses.vulnerable ?? 0) > 0;
+  const strength = attacker.statuses.strength ?? 0;
 
-  let dmg = Math.floor(amount * (isWeak ? 0.75 : 1));
+  let dmg = amount + strength;
+  dmg = Math.floor(dmg * (isWeak ? 0.75 : 1));
   dmg = Math.floor(dmg * (isVulnerable ? 1.5 : 1));
 
   const absorbed = Math.min(target.block, dmg);

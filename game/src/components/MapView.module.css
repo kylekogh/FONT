@@ -1,0 +1,61 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  min-height: 100vh;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: var(--parchment);
+  letter-spacing: 0.1em;
+}
+
+.mapContainer {
+  background: var(--bg-midnight);
+  border: 1px solid var(--bg-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-elevated);
+}
+
+.svg {
+  width: 400px;
+  height: 500px;
+}
+
+.edge {
+  stroke-width: 1.5;
+}
+
+.edgeVisited {
+  stroke: #302C4A;
+  opacity: 0.5;
+}
+
+.edgeLocked {
+  stroke: #26233F;
+}
+
+.node {
+  cursor: default;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.nodeLabel {
+  font-family: 'DM Mono', monospace;
+  pointer-events: none;
+}
+
+.hint {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--parchment-3);
+}

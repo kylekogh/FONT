@@ -1,0 +1,103 @@
+.hud {
+  background: var(--bg-raised);
+  border: 1px solid var(--bg-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 200px;
+}
+
+.name {
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--gold);
+  letter-spacing: 0.06em;
+}
+
+.hpRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.hpBar {
+  flex: 1;
+  height: 8px;
+  background: var(--bg-surface);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.hpFill {
+  height: 100%;
+  background: var(--green);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.hpText {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--parchment-2);
+  white-space: nowrap;
+}
+
+.block {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--blue);
+}
+
+.energyRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: var(--space-1);
+}
+
+.pipActive {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 6px rgba(230, 185, 78, 0.6);
+}
+
+.pipEmpty {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  border: 1px solid var(--bg-surface);
+}
+
+.energyLabel {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--parchment-3);
+  margin-left: var(--space-1);
+}
+
+.statuses {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.statusBadge {
+  font-family: var(--font-body);
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  color: var(--parchment-2);
+}
+
+.burn { color: var(--red); }
+.weak { color: var(--purple); }
+.vulnerable { color: var(--gold); }
+.strength { color: var(--green); }

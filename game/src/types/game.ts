@@ -1,7 +1,7 @@
 import type { CardInstance } from './card';
 import type { StatusEffect } from './card';
 
-export type NodeType = 'encounter' | 'event' | 'rest' | 'shop' | 'boss';
+export type NodeType = 'encounter' | 'event' | 'rest' | 'shop' | 'boss' | 'elite';
 export type GamePhase = 'map' | 'combat' | 'draft' | 'event' | 'rest' | 'victory' | 'death';
 
 export type StatusState = Partial<Record<StatusEffect, number>>;
@@ -54,9 +54,18 @@ export interface MapNode {
   available: boolean;
 }
 
+export interface RunPlayerState {
+  id: string;
+  name: string;
+  hp: number;
+  maxHp: number;
+  gold: number;
+  relicIds: string[];
+}
+
 export interface RunState {
   deck: CardInstance[];
-  player: Omit<PlayerState, 'block' | 'statuses' | 'energy'>;
+  player: RunPlayerState;
   currentNodeId: string | null;
   nodes: MapNode[];
   floor: number;
