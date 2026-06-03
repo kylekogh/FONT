@@ -1,0 +1,46 @@
+/* FONT — Midnight & Gold design tokens */
+:root {
+  /* Palette */
+  --bg-void:     #0E0D1A;
+  --bg-midnight: #141228;
+  --bg-raised:   #26233F;
+  --bg-surface:  #302C4A;
+
+  --gold:        #E6B94E;
+  --gold-dim:    rgba(230, 185, 78, 0.4);
+  --gold-faint:  rgba(230, 185, 78, 0.1);
+
+  --parchment:   #F4ECDA;
+  --parchment-2: rgba(244, 236, 218, 0.7);
+  --parchment-3: rgba(244, 236, 218, 0.4);
+
+  --red:         #C45050;
+  --green:       #4A9C6E;
+  --blue:        #4A7EC4;
+  --purple:      #8B5FC4;
+
+  /* Typography */
+  --font-display: 'Zen Dots', sans-serif;
+  --font-body:    'Fraunces', serif;
+  --font-mono:    'DM Mono', monospace;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-card: 12px;
+
+  /* Shadows */
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --shadow-elevated: 0 8px 40px rgba(0, 0, 0, 0.6);
+}
