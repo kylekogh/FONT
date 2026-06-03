@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Card Duel</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --panel: #1a1d27;
+    --panel-2: #232735;
+    --accent: #6c8cff;
+    --text: #e6e8ef;
+    --muted: #8b90a3;
+    --attack: #ff5d6c;
+    --defend: #4cc2ff;
+    --skill: #c98bff;
+    --hp: #4ade80;
+    --shield: #4cc2ff;
+    --border: #2c3142;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: radial-gradient(1200px 600px at 50% -10%, #1a1f30, var(--bg));
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .game {
+    width: 100%;
+    max-width: 900px;
+  }
+  .title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--muted);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .combatants {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .fighter {
+    flex: 1;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px 20px;
+  }
+  .fighter .name {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+  .fighter .name .badge {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .hp-bar {
+    height: 14px;
+    background: var(--panel-2);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .hp-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2fa860, var(--hp));
+    width: 100%;
+    transition: width 0.4s ease;
+  }
+  .stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .shield-tag {
+    color: var(--shield);
+    font-weight: 600;
+  }
+  .log {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 16px;
+    height: 76px;
+    overflow-y: auto;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+  .log .latest { color: var(--text); }
+  .hand-label {
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .hand {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    min-height: 200px;
+  }
+  .card {
+    width: 150px;
+    height: 200px;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--c);
+  }
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+    border-color: var(--c);
+  }
+  .card .type {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--c);
+    font-weight: 700;
+  }
+  .card .cname {
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 6px;
+  }
+  .card .desc {
+    margin-top: auto;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .card .icon {
+    font-size: 40px;
+    margin: 14px 0;
+    text-align: center;
+  }
+  .controls {
+    text-align: center;
+    margin-top: 20px;
+    min-height: 24px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .deck-info {
+    text-align: center;
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  /* Overlay */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 10, 16, 0.85);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+  .overlay.show { display: flex; }
+  .modal {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px 48px;
+    text-align: center;
+    max-width: 380px;
+  }
+  .modal h2 {
+    font-size: 34px;
+    margin-bottom: 8px;
+  }
+  .modal.win h2 { color: var(--hp); }
+  .modal.lose h2 { color: var(--attack); }
+  .modal p {
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+  .btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: filter 0.15s;
+  }
+  .btn:hover { filter: brightness(1.12); }
+  .disabled { pointer-events: none; opacity: 0.5; }
+</style>
+</head>
+<body>
+<div class="game">
+  <div class="title">⚔ Card Duel</div>
+
+  <div class="combatants">
+    <div class="fighter">
+      <div class="name">Player <span class="badge" id="p-shield-badge"></span></div>
+      <div class="hp-bar"><div class="hp-fill" id="p-hp-fill"></div></div>
+      <div class="stats">
+        <span id="p-hp-text">50 / 50</span>
+        <span class="shield-tag" id="p-shield">🛡 0</span>
+      </div>
+    </div>
+    <div class="fighter">
+      <div class="name">Enemy <span class="badge">Slime King</span></div>
+      <div class="hp-bar"><div class="hp-fill" id="e-hp-fill"></div></div>
+      <div class="stats">
+        <span id="e-hp-text">30 / 30</span>
+        <span class="shield-tag" id="e-shield"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="log" id="log"></div>
+
+  <div class="hand-label">Your Hand — Play one card</div>
+  <div class="hand" id="hand"></div>
+
+  <div class="controls" id="controls"></div>
+  <div class="deck-info" id="deck-info"></div>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="modal" id="modal">
+    <h2 id="modal-title"></h2>
+    <p id="modal-text"></p>
+    <button class="btn" onclick="restart()">Play Again</button>
+  </div>
+</div>
+
+<script>
+const PLAYER_MAX = 50;
+const ENEMY_MAX = 30;
+
+// Card definitions
+const CARD_TYPES = {
+  attack: { type: "attack", name: "Strike",  icon: "🗡", desc: "Deal 6 damage", color: "var(--attack)" },
+  defend: { type: "defend", name: "Guard",   icon: "🛡", desc: "Block 5 damage", color: "var(--defend)" },
+  bash:   { type: "skill",  name: "Bash",    icon: "💥", desc: "Deal 4 + gain 3 block", color: "var(--skill)" },
+  drain:  { type: "skill",  name: "Drain",   icon: "🌀", desc: "Deal 4, heal 4 HP", color: "var(--skill)" },
+};
+
+// The 10-card deck: 5 attacks, 3 defends, 2 skills
+function buildDeck() {
+  return [
+    "attack","attack","attack","attack","attack",
+    "defend","defend","defend",
+    "bash","drain",
+  ];
+}
+
+let player, enemy, deck, discard, hand, locked;
+
+function init() {
+  player = { hp: PLAYER_MAX, shield: 0 };
+  enemy  = { hp: ENEMY_MAX, shield: 0 };
+  deck = shuffle(buildDeck());
+  discard = [];
+  hand = [];
+  locked = false;
+  logMsg("A wild Slime King appears! Draw your cards.");
+  startTurn();
+  render();
+}
+
+function shuffle(a) {
+  a = a.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function drawOne() {
+  if (deck.length === 0) {
+    if (discard.length === 0) return null;
+    deck = shuffle(discard);
+    discard = [];
+    logMsg("Deck reshuffled.");
+  }
+  return deck.pop();
+}
+
+function startTurn() {
+  // player shield resets at the start of their turn
+  player.shield = 0;
+  hand = [];
+  for (let i = 0; i < 3; i++) {
+    const c = drawOne();
+    if (c) hand.push(c);
+  }
+}
+
+function playCard(index) {
+  if (locked) return;
+  locked = true;
+  const key = hand[index];
+  const card = CARD_TYPES[key];
+
+  // Apply card effect
+  switch (key) {
+    case "attack":
+      dealToEnemy(6);
+      logMsg(`You play Strike — 6 damage to the enemy.`);
+      break;
+    case "defend":
+      player.shield += 5;
+      logMsg(`You play Guard — gain 5 block.`);
+      break;
+    case "bash":
+      dealToEnemy(4);
+      player.shield += 3;
+      logMsg(`You play Bash — 4 damage and 3 block.`);
+      break;
+    case "drain":
+      dealToEnemy(4);
+      const healed = Math.min(4, PLAYER_MAX - player.hp);
+      player.hp += healed;
+      logMsg(`You play Drain — 4 damage, heal ${healed} HP.`);
+      break;
+  }
+
+  // Move played card to discard, rest of hand discarded too
+  discard.push(...hand);
+  hand = [];
+  render();
+
+  if (enemy.hp <= 0) {
+    return endGame(true);
+  }
+
+  // Enemy attacks after a short beat
+  setTimeout(enemyTurn, 700);
+}
+
+function dealToEnemy(amount) {
+  enemy.hp = Math.max(0, enemy.hp - amount);
+}
+
+function enemyTurn() {
+  const dmg = 5 + Math.floor(Math.random() * 6); // 5-10
+  const blocked = Math.min(player.shield, dmg);
+  const through = dmg - blocked;
+  player.hp = Math.max(0, player.hp - through);
+
+  if (blocked > 0) {
+    logMsg(`Enemy attacks for ${dmg} — ${blocked} blocked, ${through} damage taken.`);
+  } else {
+    logMsg(`Enemy attacks for ${dmg} damage.`);
+  }
+  render();
+
+  if (player.hp <= 0) {
+    return endGame(false);
+  }
+
+  setTimeout(() => {
+    startTurn();
+    locked = false;
+    render();
+  }, 600);
+}
+
+function endGame(won) {
+  locked = true;
+  const overlay = document.getElementById("overlay");
+  const modal = document.getElementById("modal");
+  modal.className = "modal " + (won ? "win" : "lose");
+  document.getElementById("modal-title").textContent = won ? "Victory!" : "Defeated";
+  document.getElementById("modal-text").textContent = won
+    ? "You slayed the Slime King."
+    : "The Slime King got the better of you.";
+  overlay.classList.add("show");
+}
+
+function restart() {
+  document.getElementById("overlay").classList.remove("show");
+  init();
+}
+
+function logMsg(msg) {
+  const log = document.getElementById("log");
+  const lines = log.querySelectorAll("div");
+  lines.forEach(l => l.classList.remove("latest"));
+  const div = document.createElement("div");
+  div.className = "latest";
+  div.textContent = "› " + msg;
+  log.appendChild(div);
+  log.scrollTop = log.scrollHeight;
+}
+
+function render() {
+  // HP bars
+  document.getElementById("p-hp-fill").style.width = (player.hp / PLAYER_MAX * 100) + "%";
+  document.getElementById("e-hp-fill").style.width = (enemy.hp / ENEMY_MAX * 100) + "%";
+  document.getElementById("p-hp-text").textContent = `${player.hp} / ${PLAYER_MAX}`;
+  document.getElementById("e-hp-text").textContent = `${enemy.hp} / ${ENEMY_MAX}`;
+  document.getElementById("p-shield").textContent = "🛡 " + player.shield;
+
+  // Hand
+  const handEl = document.getElementById("hand");
+  handEl.innerHTML = "";
+  hand.forEach((key, i) => {
+    const card = CARD_TYPES[key];
+    const el = document.createElement("div");
+    el.className = "card";
+    el.style.setProperty("--c", card.color);
+    el.innerHTML = `
+      <div class="type">${card.type}</div>
+      <div class="cname">${card.name}</div>
+      <div class="icon">${card.icon}</div>
+      <div class="desc">${card.desc}</div>
+    `;
+    el.onclick = () => playCard(i);
+    handEl.appendChild(el);
+  });
+  handEl.className = "hand" + (locked ? " disabled" : "");
+
+  // Controls / deck info
+  document.getElementById("controls").textContent = locked
+    ? "Resolving turn…"
+    : "Choose a card to play. Unplayed cards are discarded.";
+  document.getElementById("deck-info").textContent =
+    `Deck: ${deck.length}  ·  Discard: ${discard.length}`;
+}
+
+init();
+</script>
+</body>
+</html>

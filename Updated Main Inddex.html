@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solo RPG Companions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&family=Zen+Dots&family=Fraunces:ital,wght@1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #faf8f5;
+  --text: #1a1208;
+  --text-mid: #5a4a30;
+  --text-light: #9a8a70;
+  --font-display: 'Cinzel', 'Times New Roman', serif;
+  --font-body: 'Crimson Pro', Georgia, serif;
+  --font-zen: 'Zen Dots', monospace;
+  --font-mono: 'DM Mono', monospace;
+  --font-fran: 'Fraunces', Georgia, serif;
+  /* FONT palette */
+  --font-bg0: #0E0D1A;
+  --font-bg1: #141228;
+  --font-bg2: #26233F;
+  --font-gold: #E6B94E;
+  --font-cream: #F4ECDA;
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 16px; overflow-x: hidden; }
+
+/* ===================== SUITE HERO ===================== */
+#hero {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 24px 60px;
+  position: relative;
+  background:
+    radial-gradient(ellipse at 15% 40%, rgba(201,146,42,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 20%, rgba(0,151,167,0.10) 0%, transparent 55%),
+    radial-gradient(ellipse at 60% 85%, rgba(85,139,47,0.08) 0%, transparent 55%),
+    linear-gradient(180deg, #fffdf8 0%, #fdf8f0 50%, #f8f0e4 100%);
+  overflow: hidden;
+}
+
+.hero-ring { position: absolute; border-radius: 50%; pointer-events: none; opacity: 0.12; }
+.hero-ring-1 { width: 600px; height: 600px; border: 1px solid #c9922a; top: -180px; left: -120px; }
+.hero-ring-2 { width: 400px; height: 400px; border: 1px solid #0097a7; bottom: -80px; right: -60px; }
+
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-bottom: 22px;
+  position: relative;
+}
+
+h1.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 8vw, 96px);
+  font-weight: 900;
+  line-height: 0.95;
+  margin-bottom: 18px;
+  position: relative;
+}
+
+.title-line-1 { display: block; color: #1a1208; }
+.title-line-2 {
+  display: block;
+  background: linear-gradient(120deg, #c9922a 0%, #e8a030 25%, #0097a7 50%, #558b2f 75%, #e64a19 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  background-size: 200% 100%;
+  animation: shimmer 6s ease-in-out infinite;
+}
+@keyframes shimmer { 0%,100%{background-position:0% 50%;} 50%{background-position:100% 50%;} }
+
+.hero-sub {
+  font-size: clamp(11px, 1.5vw, 14px);
+  color: var(--text-mid);
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  font-weight: 300;
+  position: relative;
+}
+
+.hero-desc {
+  max-width: 500px;
+  font-size: 18px;
+  color: var(--text-mid);
+  line-height: 1.85;
+  margin-bottom: 36px;
+  font-style: italic;
+  position: relative;
+}
+
+.hero-pills {
+  display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+  position: relative;
+}
+.pill {
+  padding: 6px 16px;
+  border: 1px solid rgba(90,74,48,0.18);
+  color: var(--text-mid);
+  font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.6);
+}
+
+/* ===================== FONT FEATURE ===================== */
+#font-feature {
+  background: var(--font-bg0);
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+}
+
+/* Top gold rule */
+#font-feature::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--font-gold) 30%, #F4ECDA 50%, var(--font-gold) 70%, transparent 100%);
+}
+
+/* Glow blobs */
+.font-glow-a {
+  position: absolute;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(230,185,78,0.12) 0%, transparent 70%);
+  top: -100px; left: -100px;
+  pointer-events: none;
+}
+.font-glow-b {
+  position: absolute;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(230,185,78,0.06) 0%, transparent 70%);
+  bottom: -50px; right: 100px;
+  pointer-events: none;
+}
+
+/* Ring decoration — simplified city rings */
+.font-rings {
+  position: absolute;
+  right: -80px; top: 50%;
+  transform: translateY(-50%);
+  width: 560px; height: 560px;
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.font-feature-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 90px 60px 90px;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 60px;
+  align-items: center;
+}
+
+.font-feature-left {}
+
+.font-feature-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--font-gold);
+  opacity: 0.7;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.font-feature-eyebrow::before {
+  content: '';
+  width: 30px; height: 1px;
+  background: var(--font-gold);
+  opacity: 0.5;
+}
+
+.font-wordmark {
+  font-family: var(--font-zen);
+  font-size: clamp(72px, 11vw, 148px);
+  color: var(--font-gold);
+  line-height: 0.9;
+  margin-bottom: 6px;
+  letter-spacing: -2px;
+  text-shadow: 0 0 80px rgba(230,185,78,0.25), 0 0 160px rgba(230,185,78,0.1);
+}
+
+.font-tagline {
+  font-family: var(--font-fran);
+  font-style: italic;
+  font-size: clamp(16px, 2vw, 22px);
+  color: rgba(244,236,218,0.55);
+  margin-bottom: 32px;
+  letter-spacing: 0.5px;
+}
+
+.font-premise {
+  font-family: var(--font-body);
+  font-size: clamp(15px, 1.4vw, 18px);
+  color: rgba(244,236,218,0.75);
+  line-height: 1.9;
+  max-width: 560px;
+  margin-bottom: 40px;
+}
+
+.font-premise strong {
+  color: var(--font-gold);
+  font-weight: 400;
+}
+
+.font-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.font-btn-primary {
+  display: inline-block;
+  padding: 14px 32px;
+  background: var(--font-gold);
+  color: var(--font-bg0);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 500;
+  transition: filter 0.15s, transform 0.15s;
+}
+.font-btn-primary:hover { filter: brightness(1.1); transform: translateY(-2px); }
+
+.font-btn-ghost {
+  display: inline-block;
+  padding: 13px 28px;
+  border: 1px solid rgba(230,185,78,0.4);
+  color: rgba(244,236,218,0.65);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.font-btn-ghost:hover {
+  border-color: var(--font-gold);
+  color: var(--font-gold);
+}
+
+/* Feature panel right */
+.font-feature-right {
+  border: 1px solid rgba(230,185,78,0.12);
+  background: rgba(38,35,63,0.5);
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.font-stat-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(230,185,78,0.08);
+}
+.font-stat-row:last-child { padding-bottom: 0; border-bottom: none; }
+
+.font-stat-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(230,185,78,0.5);
+}
+.font-stat-value {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: rgba(244,236,218,0.75);
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* Bottom gold rule */
+#font-feature::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(230,185,78,0.3) 30%, rgba(230,185,78,0.5) 50%, rgba(230,185,78,0.3) 70%, transparent 100%);
+}
+
+/* ===================== STATS BAR ===================== */
+#world-bar {
+  background: #1a1208;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+.world-stat { text-align: center; color: rgba(245,232,204,0.9); }
+.world-stat-num { font-family: var(--font-display); font-size: 26px; font-weight: 700; display: block; }
+.world-stat-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(245,232,204,0.35); }
+
+/* ===================== SECTION HEADER ===================== */
+.section-head { text-align: center; padding: 70px 24px 50px; position: relative; }
+.section-head h2 { font-family: var(--font-display); font-size: clamp(18px, 3vw, 28px); color: var(--text); letter-spacing: 5px; margin-bottom: 10px; }
+.section-head p { font-size: 16px; color: var(--text-light); font-style: italic; }
+.section-head-line { width: 80px; height: 1px; margin: 18px auto 0; background: linear-gradient(90deg, transparent, #c9922a, #0097a7, transparent); }
+
+/* ===================== COMPANIONS GRID ===================== */
+.companions {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 3px;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 3px 80px;
+}
+
+.card {
+  position: relative;
+  background: #fff;
+  padding: 40px 36px 36px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.25s ease;
+}
+.card:hover { transform: translateY(-5px); box-shadow: 0 24px 70px rgba(0,0,0,0.13); z-index: 2; }
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--c);
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--c) 5%, transparent), transparent 50%);
+  pointer-events: none;
+}
+
+.span-8  { grid-column: span 8; }
+.span-4  { grid-column: span 4; }
+.span-6  { grid-column: span 6; }
+.span-5  { grid-column: span 5; }
+.span-7  { grid-column: span 7; }
+.span-12 { grid-column: span 12; }
+
+.c-xylandra { --c: #c9922a; }
+.c-astro    { --c: #0097a7; }
+.c-artefact { --c: #558b2f; }
+.c-wildkin  { --c: #e64a19; }
+.c-ronin    { --c: #8b1a1a; }
+.c-shinobi  { --c: #4a1f6e; }
+.c-coming   { --c: #bdbdbd; }
+
+.card-eyebrow {
+  font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--c); margin-bottom: 14px;
+  font-family: var(--font-body); position: relative; z-index: 1;
+}
+.card-name {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.5vw, 38px);
+  font-weight: 700; color: var(--text);
+  line-height: 1.05; margin-bottom: 8px;
+  position: relative; z-index: 1;
+}
+.card-genre {
+  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--text-light); margin-bottom: 20px;
+  position: relative; z-index: 1;
+}
+.card-blurb {
+  font-size: 15px; color: var(--text-mid);
+  line-height: 1.85; margin-bottom: 24px;
+  position: relative; z-index: 1;
+}
+.card-list {
+  margin-bottom: 30px; position: relative; z-index: 1;
+  display: flex; flex-direction: column; gap: 5px;
+}
+.card-list-item {
+  font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--text-light); padding: 5px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  display: flex; align-items: center; gap: 10px;
+}
+.card-list-item::before {
+  content: ''; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--c); flex-shrink: 0; opacity: 0.8;
+}
+.card-actions { display: flex; gap: 10px; flex-wrap: wrap; position: relative; z-index: 1; }
+
+.launch {
+  display: inline-block; padding: 12px 24px;
+  background: var(--c); color: #fff;
+  font-family: var(--font-body);
+  font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+  text-decoration: none;
+  transition: filter 0.15s, transform 0.15s;
+  border: none; cursor: pointer;
+}
+.launch:hover { filter: brightness(1.12); transform: translateY(-1px); }
+.launch.ghost { background: transparent; border: 1px solid var(--c); color: var(--c); }
+.launch.ghost:hover { background: var(--c); color: #fff; }
+.launch.off { background: #e8e0d8; color: #b8b0a8; cursor: default; pointer-events: none; }
+
+.card-watermark {
+  position: absolute; bottom: -10px; right: 20px;
+  font-family: var(--font-display); font-size: 120px;
+  font-weight: 900; color: var(--c); opacity: 0.04;
+  line-height: 1; pointer-events: none; z-index: 0; user-select: none;
+}
+
+/* ===================== MULTIVERSE BANNER ===================== */
+#multiverse {
+  padding: 100px 40px; text-align: center;
+  background: linear-gradient(160deg, #110d06 0%, #1e1508 40%, #0e1510 70%, #0d1418 100%);
+  position: relative; overflow: hidden;
+}
+#multiverse::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 20% 50%, rgba(201,146,42,0.2) 0%, transparent 40%),
+    radial-gradient(circle at 80% 30%, rgba(0,151,167,0.15) 0%, transparent 40%),
+    radial-gradient(circle at 50% 80%, rgba(85,139,47,0.12) 0%, transparent 35%);
+  pointer-events: none;
+}
+.stars {
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 25% 60%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 40% 15%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 55% 75%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 35%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 85% 65%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 92% 15%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 8% 80%, rgba(255,255,255,0.3) 0%, transparent 100%);
+  pointer-events: none;
+}
+#multiverse h2 { font-family: var(--font-display); font-size: clamp(24px, 4vw, 52px); color: #f5e8cc; margin-bottom: 16px; position: relative; letter-spacing: 2px; }
+#multiverse p { font-size: 17px; color: rgba(245,232,204,0.5); font-style: italic; max-width: 480px; margin: 0 auto; line-height: 1.8; position: relative; }
+
+/* ===================== FOOTER ===================== */
+footer {
+  background: #0d0a05;
+  padding: 28px 48px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px;
+}
+.ft-brand { font-family: var(--font-display); font-size: 14px; color: rgba(245,232,204,0.4); letter-spacing: 4px; }
+.ft-note { font-size: 10px; color: rgba(245,232,204,0.2); letter-spacing: 3px; text-transform: uppercase; }
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 1100px) {
+  .font-feature-inner { grid-template-columns: 1fr; padding: 60px 40px; }
+  .font-rings { display: none; }
+  .font-feature-right { display: none; }
+  .span-8,.span-4,.span-6,.span-5,.span-7 { grid-column: span 12; }
+}
+@media (max-width: 600px) {
+  .font-feature-inner { padding: 50px 24px; }
+  .card { padding: 28px 24px 24px; }
+  #world-bar { gap: 28px; }
+  footer { flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- SUITE HERO -->
+<section id="hero">
+  <div class="hero-ring hero-ring-1"></div>
+  <div class="hero-ring hero-ring-2"></div>
+  <div class="hero-eyebrow">A Personal Collection</div>
+  <h1 class="hero-title">
+    <span class="title-line-1">Solo RPG</span>
+    <span class="title-line-2">Companions</span>
+  </h1>
+  <div class="hero-sub">Self-contained · Aphantasia-friendly · AI-powered</div>
+  <p class="hero-desc">Every companion built directly from its rulebook. Every anchor grounded in sensation, not sight. No book needed to play.</p>
+  <div class="hero-pills">
+    <span class="pill">Aphantasia-Friendly</span>
+    <span class="pill">AI-Powered</span>
+    <span class="pill">Self-Contained</span>
+    <span class="pill">Sensory-First</span>
+    <span class="pill">Export / Import</span>
+  </div>
+</section>
+
+<!-- FONT FEATURE -->
+<section id="font-feature">
+  <div class="font-glow-a"></div>
+  <div class="font-glow-b"></div>
+
+  <!-- City rings decoration -->
+  <svg class="font-rings" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="280" cy="280" r="260" fill="none" stroke="#E6B94E" stroke-width="1" stroke-dasharray="4 8"/>
+    <circle cx="280" cy="280" r="200" fill="none" stroke="#E6B94E" stroke-width="1" stroke-dasharray="3 7"/>
+    <circle cx="280" cy="280" r="145" fill="none" stroke="#E6B94E" stroke-width="1" stroke-dasharray="2 8"/>
+    <circle cx="280" cy="280" r="95"  fill="none" stroke="#E6B94E" stroke-width="1" stroke-dasharray="4 6"/>
+    <circle cx="280" cy="280" r="50"  fill="none" stroke="#E6B94E" stroke-width="1.5"/>
+    <circle cx="280" cy="280" r="8"   fill="#E6B94E" opacity="0.6"/>
+    <!-- Radial lines -->
+    <line x1="280" y1="20" x2="280" y2="540" stroke="#E6B94E" stroke-width="0.5" stroke-opacity="0.2"/>
+    <line x1="20" y1="280" x2="540" y2="280" stroke="#E6B94E" stroke-width="0.5" stroke-opacity="0.2"/>
+    <line x1="96" y1="96" x2="464" y2="464" stroke="#E6B94E" stroke-width="0.5" stroke-opacity="0.15"/>
+    <line x1="464" y1="96" x2="96" y2="464" stroke="#E6B94E" stroke-width="0.5" stroke-opacity="0.15"/>
+  </svg>
+
+  <div class="font-feature-inner">
+    <div class="font-feature-left">
+      <div class="font-feature-eyebrow">Original Solo TTRPG · In Development</div>
+      <div class="font-wordmark">FONT</div>
+      <div class="font-tagline">your only limit is you</div>
+      <p class="font-premise">
+        Two lives. One city. A dungeon with no bottom.<br>
+        <strong>Sora</strong> is the city you protect in the daylight — the job, the people, the ordinary weight of being known.
+        When night falls you descend into <strong>Mugen</strong> to become something more.
+        You cannot have both. The question is what you pay, and when.
+      </p>
+      <div class="font-actions">
+        <a class="font-btn-primary" href="./Font/index.html">▶ Play the Companion</a>
+        <a class="font-btn-ghost" href="./Font/index.html">◈ The World of Sora</a>
+      </div>
+    </div>
+
+    <div class="font-feature-right">
+      <div class="font-stat-row">
+        <div class="font-stat-label">The City</div>
+        <div class="font-stat-value">Five factions. Five ways to earn your rank. The Guild certifies your depth. The Weld makes your tools. Titan tests your limit. Ryuugenism holds the faith. One faction still unnamed.</div>
+      </div>
+      <div class="font-stat-row">
+        <div class="font-stat-label">The Dungeon</div>
+        <div class="font-stat-value">Mugen descends without end. Below S rank lies the Uncharted — territory no certified delver has mapped and returned to describe cleanly.</div>
+      </div>
+      <div class="font-stat-row">
+        <div class="font-stat-label">The Bond</div>
+        <div class="font-stat-value">Your Spark chose you. A spirit attached and changed how you move through the world. It has opinions. It doesn't always agree.</div>
+      </div>
+      <div class="font-stat-row">
+        <div class="font-stat-label">The Companion</div>
+        <div class="font-stat-value">Day/night loop · City map · Faction standing · Dungeon oracle · The Inscription — an AI that writes your history in the voice of someone who survived it.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div id="world-bar">
+  <div class="world-stat">
+    <span class="world-stat-num">7</span>
+    <span class="world-stat-label">Active Worlds</span>
+  </div>
+  <div class="world-stat">
+    <span class="world-stat-num">9</span>
+    <span class="world-stat-label">Companions</span>
+  </div>
+  <div class="world-stat">
+    <span class="world-stat-num">18</span>
+    <span class="world-stat-label">Elements</span>
+  </div>
+  <div class="world-stat">
+    <span class="world-stat-num">∞</span>
+    <span class="world-stat-label">Stories</span>
+  </div>
+</div>
+
+<!-- SECTION HEADER -->
+<div class="section-head">
+  <h2>The Collection</h2>
+  <p>Six worlds built from their rulebooks. Each one self-contained.</p>
+  <div class="section-head-line"></div>
+</div>
+
+<!-- COMPANIONS GRID -->
+<div class="companions">
+
+  <!-- ROW 1: XYLANDRA + ASTROPRISMA -->
+  <div class="card c-xylandra span-8">
+    <div class="card-watermark">I</div>
+    <div class="card-eyebrow">Savage Blades · Loner System</div>
+    <div class="card-name">✦ Xylandra</div>
+    <div class="card-genre">Pulp Sword-and-Planet · Post-Collapse World</div>
+    <div class="card-blurb">A savage planet lost in time. Builder ruins pulse with forgotten power. Warlord factions clash across crimson dunes. Sky-pirates navigate temporal anomalies where past and future bleed together.</div>
+    <div class="card-list">
+      <div class="card-list-item">Oracle · Twist Counter · Scene Engine · Adventure Hook Generator</div>
+      <div class="card-list-item">Full Lore Codex · All 6 Factions · Bestiary · Relations Map</div>
+      <div class="card-list-item">Aphantasia-first sensory anchors per environment type</div>
+      <div class="card-list-item">AI Scene Narration · AI Oracle · AI NPC Generation</div>
+      <div class="card-list-item">Desktop + Mobile versions · Export / Import save</div>
+    </div>
+    <div class="card-actions">
+      <a class="launch" href="./Xylandra/index.html">▶ Desktop</a>
+      <a class="launch ghost" href="./Xylandra/mobile.html">▶ Mobile</a>
+    </div>
+  </div>
+
+  <div class="card c-astro span-4">
+    <div class="card-watermark">II</div>
+    <div class="card-eyebrow">Crescent Chimera · 7 Expansions</div>
+    <div class="card-name">◈ Astroprisma</div>
+    <div class="card-genre">Retrofuturistic Sci-Fi · Post-Apocalyptic Space</div>
+    <div class="card-blurb">The light of civilisation has faded. Pick an Origin, crew a starship, and explore a shattered star system hex by hex — running faction quests, hacking the Cybersphere, surviving the Abyssal Scars.</div>
+    <div class="card-list">
+      <div class="card-list-item">All 7 Origins · Starship & Crew management</div>
+      <div class="card-list-item">All 5 Factions · d10 mission tables · Favor tracking</div>
+      <div class="card-list-item">Combat tracker · Space combat · Enemy database</div>
+      <div class="card-list-item">All 7 expansion modules included · Desktop only</div>
+    </div>
+    <div class="card-actions">
+      <a class="launch" href="./astroprisma/index.html">▶ Launch</a>
+    </div>
+  </div>
+
+  <!-- ROW 2: ARTEFACT + WILDKIN -->
+  <div class="card c-artefact span-5">
+    <div class="card-watermark">III</div>
+    <div class="card-eyebrow">Mousehole Press · Jack Harrison</div>
+    <div class="card-name">✦ Artefact</div>
+    <div class="card-genre">Solo Journaling · Contemplative Play</div>
+    <div class="card-blurb">You rest, fallen or discarded in the dirt. You are not mortal. Seasons pass in flashes until a new Keeper lifts you from the detritus. The story of your many lives, across three acts and centuries of silence.</div>
+    <div class="card-list">
+      <div class="card-list-item">All 9 Artefact types · All 12 Keepers across 3 Acts</div>
+      <div class="card-list-item">Rest timer · Dust & Rust · Shifts & Currents tables</div>
+      <div class="card-list-item">Burrows & Bloodlines mini-game included</div>
+      <div class="card-list-item">AI anchors for non-human, non-visual imagination</div>
+      <div class="card-list-item">Desktop + Mobile · Soundtrack included</div>
+    </div>
+    <div class="card-actions">
+      <a class="launch" href="./Artefact/index.html">▶ Desktop</a>
+      <a class="launch ghost" href="./Artefact/mobile.html">▶ Mobile</a>
+    </div>
+  </div>
+
+  <div class="card c-wildkin span-7">
+    <div class="card-watermark">IV</div>
+    <div class="card-eyebrow">Nick Gralewicz · deepdark.games</div>
+    <div class="card-name">Wildkin</div>
+    <div class="card-genre">Solo Story Game · ~1 Hour · You Are the Creature</div>
+    <div class="card-blurb">You are a fantastical creature who roams the wilderness — until you are caught. Three Trainers. Three Acts. Three Regions: Hana, Kōri, Suna. Were they kind? Did you flourish? What legacy did they leave on you?</div>
+    <div class="card-list">
+      <div class="card-list-item">All 3 regions · 18 elements · All 6 trainer archetypes</div>
+      <div class="card-list-item">Reflection & Change questions with persistent answers</div>
+      <div class="card-list-item">Ball timer · Location creator · Ability tracker</div>
+      <div class="card-list-item">AI trainer impressions · Freedom vs confinement anchors</div>
+      <div class="card-list-item">Desktop + Mobile</div>
+    </div>
+    <div class="card-actions">
+      <a class="launch" href="./Wildkin/index.html">▶ Desktop</a>
+      <a class="launch ghost" href="./Wildkin/mobile.html">▶ Mobile</a>
+    </div>
+  </div>
+
+  <!-- ROW 3: RONIN + SHINOBI -->
+  <div class="card c-ronin span-6">
+    <div class="card-watermark">V</div>
+    <div class="card-eyebrow">Pum Klungthanaboon · Solo System</div>
+    <div class="card-name">刀 Ronin</div>
+    <div class="card-genre">Feudal Japan · Wandering Swordmaster</div>
+    <div class="card-blurb">The wars are over. Your lord is dead. You walk the roads of Edo Japan with no master, no purpose, and a blade that remembers everything. Journey through a land of fractured clans and quiet moments between storms.</div>
+    <div class="card-list">
+      <div class="card-list-item">Journey engine · Oracle · Scene generator</div>
+      <div class="card-list-item">Allies · Villains · Clan allegiance tracker</div>
+      <div class="card-list-item">SENSE tab: steel, cedar smoke, cold stone</div>
+      <div class="card-list-item">AI narrative anchors · Play log · Desktop only</div>
+    </div>
+    <div class="card-actions">
+      <a class="launch" href="./Ronin/index.html">▶ Launch</a>
+    </div>
+  </div>
+
+  <div class="card c-shinobi span-6">
+    <div class="card-watermark">VI</div>
+    <div class="card-eyebrow">Supplement for Ronin · Shadow Operations</div>
+    <div class="card-name">忍 Shinobi</div>
+    <div class="card-genre">Feudal Japan · Covert Operative</div>
+    <div class="card-blurb">Where the Ronin walks in daylight, you move through cracks. New mechanics for infiltration, disguise, and the slow corrosion of a life lived in shadow. The same fractured Japan, seen from its hidden side.</div>
+    <div class="card-list">
+      <div class="card-list-item">Mission engine · Infiltration rolls · Cover identities</div>
+      <div class="card-list-item">Nemesis tracker · Network of contacts</div>
+      <div class="card-list-item">SENSE tab: silk rope, wet earth, held breath</div>
+      <div class="card-list-item">AI mission briefs · Reputation system · Desktop only</div>
+    </div>
+    <div class="card-actions">
+      <a class="launch" href="./Shinobi/index.html">▶ Launch</a>
+    </div>
+  </div>
+
+  <!-- COMING SOON -->
+  <div class="card c-coming span-12">
+    <div class="card-eyebrow">Coming Soon</div>
+    <div class="card-name" style="color:#9e9e9e;">Next World</div>
+    <div class="card-genre" style="color:#c0b8b0;">ION Heart · And More</div>
+    <div class="card-blurb" style="color:#b8b0a8;max-width:600px;">The collection keeps growing. Each new companion built directly from its rulebook — self-contained, aphantasia-friendly, AI-powered where it actually matters.</div>
+    <div class="card-actions">
+      <span class="launch off">▶ Not Yet Built</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- MULTIVERSE BANNER -->
+<section id="multiverse">
+  <div class="stars"></div>
+  <h2>The Multiverse Awaits</h2>
+  <p>Every world built from its rulebook. Every anchor grounded in sensation, not sight.</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-brand">Solo RPG Companions</div>
+  <div class="ft-note">Personal Collection · Built with Claude · Aphantasia-Friendly</div>
+</footer>
+
+</body>
+</html>
