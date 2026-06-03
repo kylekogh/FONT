@@ -1,6 +1,6 @@
 ---
 id: TASK-FO002
-status: pending
+status: done
 priority: p1
 story_id: STORY-FO001
 directive_id: DIRECT-FO001

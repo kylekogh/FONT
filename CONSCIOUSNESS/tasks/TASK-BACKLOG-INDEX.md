@@ -1,6 +1,5 @@
 id|priority|title|story_ids|directive_id|feature_ids|doc|blocked_by|blocks|assignee|parent_task_id|sequence|expected_duration|story_points
 TASK-FO001|p3|File GitHub issue — consciousness plugin Windows AbsolutePath incompatibility (conscious mode, PGPS, reportIssue all fail on Windows C:\\ paths)|||||||||||||
-TASK-FO002|p1|Tech stack ADR — choose framework before any build work begins|STORY-FO001|DIRECT-FO001|||||||||||
 TASK-FO003|p1|Define card data schema (cost, effect, type, faction, flavor text)|STORY-FO001|DIRECT-FO001|||TASK-FO002|TASK-FO004,TASK-FO006,TASK-FO017|||||||
 TASK-FO004|p1|Implement draw / play / discard cycle with energy reset and hand limit|STORY-FO001|DIRECT-FO001|||TASK-FO003|TASK-FO007|||||||
 TASK-FO005|p1|Build card draft / reward screen (post-combat card selection)|STORY-FO001|DIRECT-FO001|||TASK-FO004||||||||
