@@ -20,3 +20,11 @@ TASK-FO018|p1|Write FONT-canon enemy names, event text, and card flavor (Kindled
 TASK-FO019|p2|Build death and victory screens with run summary stats|STORY-FO006|DIRECT-FO001|||||||||||||
 TASK-FO020|p2|Implement card and relic tooltips (all effects self-documenting in-app)|STORY-FO006|DIRECT-FO001|||||||||||||
 TASK-FO021|p2|Verify zero-setup playability from a fresh browser open (UI-2)|STORY-FO006|DIRECT-FO001|||TASK-FO019,TASK-FO020||||||||
+TASK-FO022|p1|Map FONT spirits, classes, and abilities to card game language (design doc)|STORY-FO007|DIRECT-FO001|||||||||||||
+TASK-FO023|p1|Define class-specific starting decks for all 6 classes (Bonded, Forged, Augmented, Hollow, Manifold, Delver)|STORY-FO007|DIRECT-FO001|||TASK-FO022||||||||
+TASK-FO024|p1|Research TWA vs Capacitor for HTML-to-APK packaging|STORY-FO008|DIRECT-FO002|||||||||||||
+TASK-FO025|p1|Package app as Android APK and submit to Google Play Store|STORY-FO008|DIRECT-FO002|||TASK-FO024||||||||
+TASK-FO026|p1|Spec AI companion — API choice, FONT context prompt, cost model|STORY-FO009|DIRECT-FO002|||||||||||||
+TASK-FO027|p1|Build in-game AI companion chat panel|STORY-FO009|DIRECT-FO002|||TASK-FO026||||||||
+TASK-FO028|p1|Design meta-currency system — earned per run, progression tracks|STORY-FO010|DIRECT-FO002|||||||||||||
+TASK-FO029|p1|Implement outside-game meta-progression layer|STORY-FO010|DIRECT-FO002|||TASK-FO028||||||||

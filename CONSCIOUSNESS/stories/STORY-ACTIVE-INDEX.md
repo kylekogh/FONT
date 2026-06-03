@@ -5,3 +5,4 @@ STORY-FO003|draft|p1|Run structure and map generation|DIRECT-FO001|TASK-FO011,TA
 STORY-FO004|draft|p2|Relics and player progression|DIRECT-FO001|TASK-FO015,TASK-FO016||
 STORY-FO005|draft|p1|The Kindled — first faction implementation|DIRECT-FO001|TASK-FO017,TASK-FO018||
 STORY-FO006|draft|p2|UI, tooltips, and run summary screens|DIRECT-FO001|TASK-FO019,TASK-FO020,TASK-FO021||
+STORY-FO007|draft|p1|Lore-to-mechanics design bridge — spirits, classes, and abilities as card language|DIRECT-FO001|TASK-FO022,TASK-FO023||

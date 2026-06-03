@@ -63,6 +63,7 @@ A self-contained roguelike deckbuilder demo set in the FONT universe, playable f
 - **STORY-FO004** — Relics and player progression
 - **STORY-FO005** — The Kindled — first faction implementation
 - **STORY-FO006** — UI, tooltips, and run summary screens
+- **STORY-FO007** — Lore-to-mechanics design bridge (spirits, classes, abilities → card language)
 
 ## Risks
 
