@@ -1,3 +1,16 @@
+.gameRoot {
+  min-height: 100vh;
+  background: var(--bg-void);
+  position: relative;
+}
+
+.relicBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+}
+
 .root {
   min-height: 100vh;
   display: flex;

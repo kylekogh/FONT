@@ -1,0 +1,18 @@
+.hand {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: var(--space-4) 0;
+  min-height: 180px;
+  position: relative;
+}
+
+.cardWrapper {
+  position: relative;
+  transition: transform 0.15s ease;
+  transform-origin: bottom center;
+}
+
+.cardWrapper:hover {
+  z-index: 50 !important;
+}
