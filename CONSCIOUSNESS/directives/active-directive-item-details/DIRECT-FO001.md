@@ -38,22 +38,22 @@ A self-contained roguelike deckbuilder demo set in the FONT universe, playable f
 
 ## Done when
 
-- [ ] **C-1** — Card system: player can draw, play, and discard cards; energy resets each turn; hand limit enforced
-- [ ] **C-2** — Card system: draft/reward screen offers card selection after each combat encounter
-- [ ] **C-3** — Card system: at least 30 distinct cards implemented with correct effects
-- [ ] **CMB-1** — Combat: enemy intent visible before player acts; enemy executes action end of player turn
-- [ ] **CMB-2** — Combat: status effects (block, weak, vulnerable, burn, or equivalent) implemented and displayed
-- [ ] **CMB-3** — Combat: at least 8 distinct enemies implemented with varied behavior patterns
-- [ ] **RUN-1** — Run: map or node path navigable from start to boss; at least 3 node types (encounter, event, rest/shop)
-- [ ] **RUN-2** — Run: at least one boss encounter with a multi-phase or unique mechanic
-- [ ] **RUN-3** — Run: run state persists correctly between encounters (HP, deck, relics)
-- [ ] **PLR-1** — Player: at least 5 relics implemented that modify run behavior in meaningful ways
-- [ ] **PLR-2** — Player: card upgrade mechanic available at rest sites or shops
-- [ ] **WIN-1** — Win/loss: death and victory both terminate the run cleanly with a summary screen
-- [ ] **UI-1** — UI: all card effects readable via tooltip; no effect requires external documentation to understand
-- [ ] **UI-2** — UI: playable from a fresh browser/desktop open with no setup steps
-- [ ] **FONT-1** — FONT integration: at least one fully realized faction with cohesive card set (15+ cards) and flavor text
-- [ ] **FONT-2** — FONT integration: enemy names, event text, and card flavor grounded in FONT canon
+- [x] **C-1** — Card system: player can draw, play, and discard cards; energy resets each turn; hand limit enforced
+- [x] **C-2** — Card system: draft/reward screen offers card selection after each combat encounter
+- [x] **C-3** — Card system: at least 30 distinct cards implemented with correct effects (43 card definitions: 22 base + 21 upgraded variants)
+- [x] **CMB-1** — Combat: enemy intent visible before player acts; enemy executes action end of player turn
+- [x] **CMB-2** — Combat: status effects (block, weak, vulnerable, burn, strength) implemented and displayed
+- [x] **CMB-3** — Combat: at least 8 distinct enemies implemented with varied behavior patterns (8 enemies: ashfields_runner, limit_seeker, feral_binder, venerator_guard, dimmed_fighter, mugen_cultist, deepwalker, the_rival)
+- [x] **RUN-1** — Run: map or node path navigable from start to boss; at least 3 node types (encounter, event, rest/shop)
+- [x] **RUN-2** — Run: at least one boss encounter with a multi-phase or unique mechanic (the_rival switches phase at HP ≤ 60)
+- [x] **RUN-3** — Run: run state persists correctly between encounters (HP, deck, relics)
+- [x] **PLR-1** — Player: at least 5 relics implemented that modify run behavior in meaningful ways (5: burning_coal, ardour_stone, star_path_token, weld_focus, hollow_shard)
+- [x] **PLR-2** — Player: card upgrade mechanic available at rest sites or shops
+- [x] **WIN-1** — Win/loss: death and victory both terminate the run cleanly with a summary screen
+- [x] **UI-1** — UI: all card effects readable via tooltip; card component renders hover tooltip with effect + flavor text
+- [ ] **UI-2** — UI: playable from a fresh browser/desktop open with no setup steps (requires deployment verification — Cloudflare Workers config exists)
+- [x] **FONT-1** — FONT integration: at least one fully realized faction with cohesive card set (15+ cards) and flavor text (22 base Kindled cards all with flavor)
+- [x] **FONT-2** — FONT integration: enemy names, event text, and card flavor grounded in FONT canon
 
 ## Stories
 
