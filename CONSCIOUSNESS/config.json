@@ -1,0 +1,8 @@
+{
+  "project_code": "FO",
+  "project_name": "FONT",
+  "mode": "full",
+  "id_format": {
+    "pattern": "^{TYPE}-FO\\d{1,5}$"
+  }
+}
