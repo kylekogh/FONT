@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useReducer, useState } from 'react';
 import { gameReducer } from './engine/gameReducer';
 import type { GameState } from './types';
 import CombatView from './components/CombatView';
@@ -9,7 +9,11 @@ import RestView from './components/RestView';
 import RelicTray from './components/RelicTray';
 import DeathView from './components/DeathView';
 import VictoryView from './components/VictoryView';
+import StoryEditor from './editor/StoryEditor';
+import WorldMaker from './world-maker/WorldMaker';
 import styles from './App.module.css';
+
+type AppMode = 'game' | 'story-editor' | 'world-maker';
 
 const INITIAL_APP_STATE: GameState = {
   phase: 'map',
@@ -18,7 +22,37 @@ const INITIAL_APP_STATE: GameState = {
 };
 
 export default function App() {
+  const [mode, setMode] = useState<AppMode>('game');
   const [state, dispatch] = useReducer(gameReducer, INITIAL_APP_STATE);
+
+  if (mode === 'story-editor') {
+    return (
+      <div>
+        <div className={styles.modeBar}>
+          <button className={styles.modeBtn} onClick={() => setMode('game')}>← Game</button>
+          <span className={styles.modeCurrent}>Story Editor</span>
+          <button className={styles.modeBtn} onClick={() => setMode('world-maker')}>World Maker →</button>
+        </div>
+        <div className={styles.editorOffset}>
+          <StoryEditor />
+        </div>
+      </div>
+    );
+  }
+
+  if (mode === 'world-maker') {
+    return (
+      <div>
+        <div className={styles.modeBar}>
+          <button className={styles.modeBtn} onClick={() => setMode('story-editor')}>← Story Editor</button>
+          <span className={styles.modeCurrent}>World Maker</span>
+        </div>
+        <div className={styles.editorOffset}>
+          <WorldMaker />
+        </div>
+      </div>
+    );
+  }
 
   // Main menu (no run active)
   if (!state.run) {
@@ -36,6 +70,14 @@ export default function App() {
           >
             Begin your run
           </button>
+          <div className={styles.toolLinks}>
+            <button className={styles.toolBtn} onClick={() => setMode('story-editor')}>
+              Story Editor
+            </button>
+            <button className={styles.toolBtn} onClick={() => setMode('world-maker')}>
+              World Maker
+            </button>
+          </div>
         </main>
       </div>
     );

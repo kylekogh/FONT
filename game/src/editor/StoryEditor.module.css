@@ -1,0 +1,416 @@
+.root {
+  min-height: 100vh;
+  background: var(--bg-void);
+  padding: var(--space-6);
+  color: var(--parchment);
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-7);
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  color: var(--parchment);
+  letter-spacing: 0.12em;
+  margin: 0 0 var(--space-1) 0;
+}
+
+.subtitle {
+  font-family: var(--font-body);
+  font-style: italic;
+  color: var(--gold);
+  font-size: 14px;
+  margin: 0;
+}
+
+.topActions {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.newBtn {
+  background: var(--gold);
+  color: var(--bg-midnight);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-body);
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.newBtn:hover { opacity: 0.9; }
+
+.exportAllBtn {
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--gold-dim);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-body);
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.exportAllBtn:hover { border-color: var(--gold); }
+
+.importBtn {
+  background: transparent;
+  color: var(--parchment-2);
+  border: 1px solid var(--bg-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-body);
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.importBtn:hover { border-color: var(--parchment-3); }
+
+/* Event grid */
+.eventGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-4);
+}
+
+.eventCard {
+  background: var(--bg-raised);
+  border: 1px solid var(--bg-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.1s;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.eventCard:hover {
+  border-color: var(--gold-dim);
+  transform: translateY(-2px);
+}
+
+.eventCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.eventTitle {
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--parchment);
+  letter-spacing: 0.08em;
+}
+
+.factionBadge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--gold);
+  background: var(--gold-faint);
+  border: 1px solid var(--gold-dim);
+  border-radius: var(--radius-sm);
+  padding: 2px 6px;
+  white-space: nowrap;
+}
+
+.eventDesc {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--parchment-2);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.eventMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.eventId {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--parchment-3);
+}
+
+.choiceCount {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--parchment-3);
+}
+
+/* Event editor */
+.eventEditor {
+  min-height: 100vh;
+  background: var(--bg-void);
+  padding: var(--space-6);
+  color: var(--parchment);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.editorTopBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.editorTitle {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--parchment);
+  letter-spacing: 0.1em;
+  margin: 0;
+}
+
+.editorActions {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.exportBtn {
+  background: var(--gold);
+  color: var(--bg-midnight);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-body);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.closeBtn {
+  background: transparent;
+  color: var(--parchment-2);
+  border: 1px solid var(--bg-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-body);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.closeBtn:hover { border-color: var(--parchment-3); }
+
+.editorFields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.fieldLabel {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--parchment-3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: var(--space-1);
+}
+
+.input, .textarea, .select {
+  width: 100%;
+  background: var(--bg-raised);
+  border: 1px solid var(--bg-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  color: var(--parchment);
+  font-family: var(--font-body);
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.input:focus, .textarea:focus, .select:focus {
+  outline: none;
+  border-color: var(--gold-dim);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 80px;
+  line-height: 1.6;
+}
+
+.select {
+  cursor: pointer;
+}
+
+.metaRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.inputSmall {
+  width: 80px;
+  background: var(--bg-raised);
+  border: 1px solid var(--bg-surface);
+  border-radius: var(--radius-sm);
+  padding: var(--space-1) var(--space-2);
+  color: var(--parchment);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.inputSmall:focus {
+  outline: none;
+  border-color: var(--gold-dim);
+}
+
+.inputTiny {
+  width: 56px;
+  background: var(--bg-raised);
+  border: 1px solid var(--bg-surface);
+  border-radius: var(--radius-sm);
+  padding: 2px var(--space-2);
+  color: var(--parchment);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.inputTiny:focus {
+  outline: none;
+  border-color: var(--gold-dim);
+}
+
+/* Choices section */
+.choicesSection {
+  margin-bottom: var(--space-6);
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.sectionTitle {
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  margin: 0;
+}
+
+.addChoiceBtn {
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--gold-dim);
+  border-radius: var(--radius-md);
+  padding: var(--space-1) var(--space-3);
+  font-family: var(--font-body);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.addChoiceBtn:hover { border-color: var(--gold); }
+
+/* Choice card */
+.choiceCard {
+  background: var(--bg-midnight);
+  border: 1px solid var(--bg-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  margin-bottom: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.choiceHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.choiceTag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.removeBtn {
+  background: transparent;
+  border: none;
+  color: var(--parchment-3);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+}
+
+.removeBtn:hover { color: var(--red); }
+
+.outcomeRow {
+  display: flex;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.outcomeField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.factionGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.factionRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.factionLabel {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--parchment-2);
+  min-width: 180px;
+}
+
+/* JSON preview */
+.jsonPreview {
+  margin-top: var(--space-6);
+}
+
+.jsonBlock {
+  background: var(--bg-midnight);
+  border: 1px solid var(--bg-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--parchment-2);
+  line-height: 1.6;
+  overflow-x: auto;
+  white-space: pre;
+}
