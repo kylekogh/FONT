@@ -1188,6 +1188,7 @@ body.midnight .section-nav { background: #0e0d1a; border-bottom-color: #26233f; 
     <span class="header-badge badge-arc" id="arcBadge">Arc I · Opening</span>
     <span class="header-badge badge-char" onclick="openCreator()" style="cursor:pointer">◈ Character</span>
     <span class="header-badge" id="aiBadgeHeader" onclick="openAiOverlay()" style="cursor:pointer;border:1px solid var(--bg3);color:var(--ash);font-family:var(--font-mono);font-size:0.58rem;letter-spacing:1.5px;padding:3px 10px;border-radius:3px;transition:all 0.2s">A · OFF</span>
+    <span class="header-badge" id="cloudBadge" onclick="openCloudOverlay()" style="cursor:pointer;border:1px solid var(--bg3);color:var(--ash);font-family:var(--font-mono);font-size:0.58rem;letter-spacing:1.5px;padding:3px 10px;border-radius:3px;transition:all 0.2s">☁ Cloud</span>
     <span class="header-badge badge-save" onclick="saveState()" id="saveBadge">● Autosave</span>
     <button class="icon-btn" onclick="resetPlaythrough()" title="Reset — wipe all data and start over" style="color:var(--hostile);opacity:0.7">↺<span class="tip">Reset playthrough</span></button>
   </div>
@@ -4403,6 +4404,96 @@ function loadState() {
   }catch(e){console.warn('Load failed',e);}
 }
 
+// === CLOUD SAVE (Cloudflare Worker + KV, named slots) ===
+function getCloudCfg() {
+  return {
+    url: (localStorage.getItem('font_cloud_url')||'').trim().replace(/\/$/,''),
+    secret: localStorage.getItem('font_cloud_secret')||'',
+    slot: localStorage.getItem('font_cloud_slot')||'',
+  };
+}
+function openCloudOverlay() {
+  const cfg = getCloudCfg();
+  document.getElementById('cloudUrlInput').value = cfg.url;
+  document.getElementById('cloudSecretInput').value = cfg.secret;
+  document.getElementById('cloudSlotInput').value = cfg.slot;
+  // If not configured yet, open the settings section so setup is obvious
+  document.getElementById('cloudConfigDetails').open = !(cfg.url && cfg.secret);
+  cloudStatus(cfg.url && cfg.secret ? '' : 'Add your Worker URL and secret to begin.');
+  document.getElementById('cloudOverlay').classList.remove('hidden');
+}
+function closeCloudOverlay() { document.getElementById('cloudOverlay').classList.add('hidden'); }
+function saveCloudConfig() {
+  localStorage.setItem('font_cloud_url', document.getElementById('cloudUrlInput').value.trim());
+  localStorage.setItem('font_cloud_secret', document.getElementById('cloudSecretInput').value);
+  updateCloudBadge();
+  cloudStatus('Connection saved.');
+}
+function clearCloudConfig() {
+  localStorage.removeItem('font_cloud_url');
+  localStorage.removeItem('font_cloud_secret');
+  document.getElementById('cloudUrlInput').value='';
+  document.getElementById('cloudSecretInput').value='';
+  updateCloudBadge();
+  cloudStatus('Connection cleared.');
+}
+function cloudStatus(msg, kind) {
+  const el = document.getElementById('cloudStatus'); if(!el) return;
+  el.textContent = msg || '';
+  el.style.color = kind==='err' ? 'var(--hostile)' : kind==='ok' ? 'var(--jade2)' : 'var(--ash)';
+}
+function updateCloudBadge() {
+  const b = document.getElementById('cloudBadge'); if(!b) return;
+  const cfg = getCloudCfg();
+  const on = !!(cfg.url && cfg.secret);
+  b.style.borderColor = on ? 'var(--accent3)' : 'var(--bg3)';
+  b.style.color = on ? 'var(--accent3)' : 'var(--ash)';
+}
+async function cloudPush() {
+  const cfg = getCloudCfg();
+  const slot = document.getElementById('cloudSlotInput').value.trim();
+  if(!cfg.url || !cfg.secret) { cloudStatus('Set the Worker URL and secret first.', 'err'); document.getElementById('cloudConfigDetails').open=true; return; }
+  if(!/^[A-Za-z0-9_-]{1,64}$/.test(slot)) { cloudStatus('Slot: letters, numbers, - and _ only.', 'err'); return; }
+  localStorage.setItem('font_cloud_slot', slot);
+  // Build the same payload localStorage saves
+  saveState();
+  const payload = localStorage.getItem(SAVE_KEY) || JSON.stringify(S);
+  cloudStatus('Pushing…');
+  try {
+    const res = await fetch(`${cfg.url}/?slot=${encodeURIComponent(slot)}`, {
+      method:'POST', headers:{'Content-Type':'application/json','X-Font-Key':cfg.secret}, body:payload,
+    });
+    const data = await res.json().catch(()=>({}));
+    if(!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+    cloudStatus(`Pushed to “${slot}” ✓`, 'ok');
+  } catch(err) {
+    cloudStatus(`Push failed — ${err.message}`, 'err');
+  }
+}
+async function cloudPull() {
+  const cfg = getCloudCfg();
+  const slot = document.getElementById('cloudSlotInput').value.trim();
+  if(!cfg.url || !cfg.secret) { cloudStatus('Set the Worker URL and secret first.', 'err'); document.getElementById('cloudConfigDetails').open=true; return; }
+  if(!/^[A-Za-z0-9_-]{1,64}$/.test(slot)) { cloudStatus('Slot: letters, numbers, - and _ only.', 'err'); return; }
+  if(!confirm(`Pull “${slot}” from the cloud? This replaces the save on this device.`)) return;
+  cloudStatus('Pulling…');
+  try {
+    const res = await fetch(`${cfg.url}/?slot=${encodeURIComponent(slot)}`, {
+      method:'GET', headers:{'X-Font-Key':cfg.secret},
+    });
+    if(res.status===404) { cloudStatus(`No save found under “${slot}”.`, 'err'); return; }
+    if(!res.ok) { const d=await res.json().catch(()=>({})); throw new Error(d.error || `HTTP ${res.status}`); }
+    const raw = await res.text();
+    JSON.parse(raw); // validate before committing
+    localStorage.setItem(SAVE_KEY, raw);
+    localStorage.setItem('font_cloud_slot', slot);
+    cloudStatus(`Pulled “${slot}” ✓ — reloading…`, 'ok');
+    setTimeout(()=>location.reload(), 700);
+  } catch(err) {
+    cloudStatus(`Pull failed — ${err.message}`, 'err');
+  }
+}
+
 const AWAKENING_MODIFIERS = [
   {weight:'lineage',shift:'power that was waiting in the bloodline — older than you, already pointed at you'},
   {weight:'urgency',shift:'something that detonated under pressure — a spirit of force and immediacy'},
@@ -4865,6 +4956,7 @@ function init(){
   renderCityMap();
   if(S.currentZone) renderLocPanel(S.currentZone, false);
   updateAiBadge();
+  updateCloudBadge();
   renderInscriptions();
   renderPeople();
   // Ensure correct section on load — always start on Play
@@ -5067,6 +5159,36 @@ function renderPeople() {
     <button class="ai-key-clear" onclick="clearAiKey()">Clear Key</button>
     <div style="font-family:var(--font-body);font-size:0.78rem;color:var(--ash2);font-style:italic;line-height:1.6;margin-bottom:16px">Your key is stored only in your browser's localStorage. It is never sent anywhere except directly to Anthropic's API.</div>
     <span class="ai-overlay-close" onclick="closeAiOverlay()">— close —</span>
+  </div>
+</div>
+
+<div class="ai-overlay hidden" id="cloudOverlay">
+  <div class="ai-overlay-box">
+    <div class="ai-overlay-title">Cloud Save</div>
+    <div class="ai-overlay-sub">Cloudflare · named slots · cross-device</div>
+
+    <!-- Slot: the everyday controls -->
+    <div style="font-family:var(--font-mono);font-size:0.55rem;letter-spacing:1.5px;color:var(--ash2);text-transform:uppercase;margin-bottom:5px">Save slot</div>
+    <input class="ai-key-input" id="cloudSlotInput" placeholder="e.g. kyle-main" autocomplete="off" spellcheck="false" style="margin-bottom:10px">
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      <button class="ai-key-save" style="margin-bottom:0;flex:1" onclick="cloudPush()">↑ Push to Cloud</button>
+      <button class="ai-key-save" style="margin-bottom:0;flex:1" onclick="cloudPull()">↓ Pull from Cloud</button>
+    </div>
+    <div id="cloudStatus" style="font-family:var(--font-mono);font-size:0.6rem;color:var(--ash);min-height:16px;margin-bottom:16px;letter-spacing:0.5px"></div>
+
+    <!-- Config: collapsed setup -->
+    <details id="cloudConfigDetails" style="margin-bottom:14px">
+      <summary style="font-family:var(--font-mono);font-size:0.58rem;letter-spacing:1px;color:var(--accent3);text-transform:uppercase;cursor:pointer;margin-bottom:10px">⚙ Connection settings</summary>
+      <div style="font-family:var(--font-mono);font-size:0.55rem;letter-spacing:1px;color:var(--ash2);text-transform:uppercase;margin-bottom:5px">Worker URL</div>
+      <input class="ai-key-input" id="cloudUrlInput" placeholder="https://font-saves.<you>.workers.dev" autocomplete="off" spellcheck="false">
+      <div style="font-family:var(--font-mono);font-size:0.55rem;letter-spacing:1px;color:var(--ash2);text-transform:uppercase;margin-bottom:5px">Shared secret</div>
+      <input class="ai-key-input" id="cloudSecretInput" type="password" placeholder="your passphrase" autocomplete="off" spellcheck="false">
+      <button class="ai-key-save" onclick="saveCloudConfig()">Save Connection</button>
+      <button class="ai-key-clear" onclick="clearCloudConfig()">Clear Connection</button>
+    </details>
+
+    <div style="font-family:var(--font-body);font-size:0.76rem;color:var(--ash2);font-style:italic;line-height:1.6;margin-bottom:16px">Your local autosave always keeps working. Cloud is an extra copy: <b>Push</b> sends this device's save up under the slot name; <b>Pull</b> brings it down on another device. URL and secret are stored only in this browser.</div>
+    <span class="ai-overlay-close" onclick="closeCloudOverlay()">— close —</span>
   </div>
 </div>
 
